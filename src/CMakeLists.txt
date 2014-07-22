@@ -1,0 +1,32 @@
+
+INCLUDE_DIRECTORIES(
+    ${SOURCE_DIR}
+    ${INCLUDE_DIR}
+)
+
+IF(SELF_TEST)
+
+    SET(SELF_TEST_PRJ "CommonSelfTest")
+    MESSAGE(STATUS "Self test is ON - generating..")
+    SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+    SET(TEST_TARGETS
+        UniCommonTest.cpp
+    )
+    SET(TEST_FILES
+        test.ini
+        utf8.txt
+    )
+
+    ADD_EXECUTABLE(${SELF_TEST_PRJ}
+        ${TEST_TARGETS}
+        ${TEST_FILES}
+    )
+
+    INSTALL(TARGETS ${SELF_TEST_PRJ}
+        RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+    INSTALL(FILES ${TEST_FILES}
+        DESTINATION ${CMAKE_SOURCE_DIR}/bin)
+
+ENDIF(SELF_TEST)
+
+

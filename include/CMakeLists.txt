@@ -5,6 +5,7 @@ SET(HEADERS
 SET(HEADERS_UTILS
     Utils/ApplicationTimer.hpp
     Utils/CReaderImplement.h
+    Utils/ArrayPtr.hpp
     Utils/UniFile.h
     Utils/UniSettings.h
     Utils/UniMutex.hpp

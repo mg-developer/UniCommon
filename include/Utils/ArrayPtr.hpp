@@ -14,16 +14,33 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with UniCommon.  If not, see <http://www.gnu.org/licenses/>.
-#ifndef _UNI_COMMON_H
-#define _UNI_COMMON_H
-
-#include "Utils/ApplicationTimer.hpp"
-#include "Utils/ArrayPtr.hpp"
-#include "Utils/UniFile.h"
-#include "Utils/UniMutex.hpp"
-#include "Utils/UniThread.hpp"
-#include "Utils/UniSettings.h"
-#include "Utils/UniTimer.h"
-
+#ifndef _ARRAY_PTR_HPP
+#define _ARRAY_PTR_HPP
+#ifdef __linux__
+#include <tr1/memory>
+#else
+#include <memory>
 #endif
 
+namespace utils {
+
+template<typename T>
+struct ArrayDeleter {
+   void operator()(T* p) {
+      delete [] p;
+   }
+};
+
+template<typename T>
+struct ArrayPtr : public std::tr1::shared_ptr<T> {
+    ArrayPtr() :
+        std::tr1::shared_ptr<T>()
+    {}
+    ArrayPtr(T *memory) :
+        std::tr1::shared_ptr<T>(memory, ArrayDeleter<T>())
+    {}
+};
+
+}//namespace utils
+
+#endif
